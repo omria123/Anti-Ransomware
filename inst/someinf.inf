@@ -1,0 +1,10 @@
+[Version]
+Signature   = "$WINDOWS NT$"
+Class = "AntiVirus"
+ClassGuid = {b1d1a169-c54f-4379-81db-bee7d88d7454}
+Provider    = %Blah%
+DriverVer   = 10/09/2001,1.0.0.0
+CatalogFile = 
+
+
+
