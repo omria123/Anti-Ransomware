@@ -32,7 +32,6 @@ NTSTATUS register_communication_port(PFLT_FILTER filter)
                                         NULL, //Message Received Handler
                                         1 ); //Maximum Connection
 
-
     FltFreeSecurityDescriptor( sd );
    	return status;
 }

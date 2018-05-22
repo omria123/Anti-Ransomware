@@ -11,9 +11,8 @@
 
 
 
-extern const PFLT_FILTER Registaraoion__filter;
-extern const FLT_REGISTRATION Registration__detailes;
-extern PFLT_PORT  Communication__server_port;
+extern const PFLT_FILTER registaraoion__filter;
+extern const FLT_REGISTRATION registration__detailes;
 
 
 //minifilter aid operations: 

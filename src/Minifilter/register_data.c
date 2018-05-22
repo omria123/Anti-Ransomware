@@ -2,7 +2,7 @@
 #include "minifilter.h"
 
 
-const PFLT_FILTER Registaraoion__filter; 
+const PFLT_FILTER registaraoion__filter; 
 
 const FLT_CONTEXT_REGISTRATION context[] = {
 	{ 
@@ -33,7 +33,7 @@ const FLT_OPERATION_REGISTRATION operations[] = {
 	{IRP_MJ_OPERATION_END}};
 	
 
-const FLT_REGISTRATION Registration__detailes = {
+const FLT_REGISTRATION registration__detailes = {
 	
 	sizeof(FLT_REGISTRATION),
 	FLT_REGISTRATION_VERSION,
