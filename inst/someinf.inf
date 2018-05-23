@@ -1,10 +1,48 @@
+
+;System defined values
 [Version]
 Signature   = "$WINDOWS NT$"
 Class = "AntiVirus"
 ClassGuid = {b1d1a169-c54f-4379-81db-bee7d88d7454}
-Provider    = %Blah%
+Provider    = %ProviderString%
 DriverVer   = 10/09/2001,1.0.0.0
 CatalogFile = 
 
 
+;where to copy
+[DestinationDirs] 
+DefaultDestDir = 12
 
+
+;which files to copy
+[DefaultInstall]
+CopyFiles = Minifilter.Driver, Minifilter.AppFiles
+OptionDesc = %ServiceName%
+
+[DefaultInstall.Services] ;; define Services to be run with the minifilter
+AddService = %ServiceName%,,Minifilter.Service
+
+[Minifilter.DriverFiles]
+%DriverName%.sys
+
+[Minifilter.AppFiles]
+%MFMName%.exe
+
+[Minifilter.Service]
+DisplayName    = %ServiceName%
+Description    = %MFMDesc%
+ServiceBinary  = %12%\&DriverName%.sys
+ServiceType    = 2 ;    SERVICE_FILE_SYSTEM_DRIVER
+StartType      = 3 ;    SERVICE_DEMAND_START
+ErrorControl   = 1 ;    SERVICE_ERROR_NORMAL%
+LoadOrderGroup = "FSFilter Anti-Virus"
+Dependencies   = FltMgr
+;AddReg        = if needed any changes in the Registery
+
+
+;; Pre-defined strings
+[Strings]
+Provider = ""
+DriverName = "myMinifilter"
+MFMName = "MFManager"
+ServiceName = "Anti-Ransomware" ;; change key name
