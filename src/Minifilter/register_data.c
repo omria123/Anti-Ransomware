@@ -2,9 +2,15 @@
 #include "minifilter.h"
 
 
-const PFLT_FILTER registaraoion__filter; 
+//This module simplify the job of registering the minifilter,
+//it initialize the objects needed in order to operate the minifilter.
 
-const FLT_CONTEXT_REGISTRATION context[] = {
+
+
+const PFLT_FILTER registration__filter = NULL; 
+
+
+static const FLT_CONTEXT_REGISTRATION context[] = {
 	{ 
 		FLT_TRANSACTION_CONTEXT,
 		0,
@@ -19,8 +25,8 @@ const FLT_CONTEXT_REGISTRATION context[] = {
 	{FLT_CONTEXT_END}
 };
 
-const FLT_OPERATION_REGISTRATION operations[] = {
-	{	
+static const FLT_OPERATION_REGISTRATION operations[] = {
+{	
 		IRP_MJ_WRITE,
 		0,
 		write_preoperation_callback,
@@ -39,7 +45,7 @@ const FLT_REGISTRATION registration__detailes = {
 	FLT_REGISTRATION_VERSION,
 	NULL,
 	context,
-	operations, 
+	operations,
 	close_filter,//unloading minifilter callback
 	NULL, 
 	NULL,

@@ -1,12 +1,8 @@
 #define PORT_NAME "AntiRansomCommun"
+#define MAX_MESSAGE
 
 
-
-
-
-NTSTATUS register_communication_port(PFLT_FILTER);
-
-
+NTSTATUS filter_commun__register_communication_port(PFLT_FILTER);
 
 
 

@@ -12,6 +12,7 @@ CatalogFile =
 ;where to copy
 [DestinationDirs] 
 DefaultDestDir = 12
+;;optional - define some other files to be copied elsewhere
 
 
 ;which files to copy
@@ -33,11 +34,25 @@ DisplayName    = %ServiceName%
 Description    = %MFMDesc%
 ServiceBinary  = %12%\&DriverName%.sys
 ServiceType    = 2 ;    SERVICE_FILE_SYSTEM_DRIVER
-StartType      = 3 ;    SERVICE_DEMAND_START
+StartType      = 3 ;    The stage which the minifilter is loaded in this case - SERVICE_DEMAND_START(3) 
 ErrorControl   = 1 ;    SERVICE_ERROR_NORMAL%
 LoadOrderGroup = "FSFilter Anti-Virus"
 Dependencies   = FltMgr
-;AddReg        = if needed any changes in the Registery
+AddReg        =
+
+
+
+[DefaultUninstall] ;
+DelFiles   = Minifilter.DriverFiles, Minifilter.UserFiles
+;DelReg    = define deletion of registery if registery was effected
+
+
+[DefaultUninstall.Services]
+DelService  = %ServiceName%,0x200
+
+
+
+
 
 
 ;; Pre-defined strings
@@ -46,3 +61,5 @@ Provider = ""
 DriverName = "myMinifilter"
 MFMName = "MFManager"
 ServiceName = "Anti-Ransomware" ;; change key name
+
+
