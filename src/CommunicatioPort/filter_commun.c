@@ -113,7 +113,7 @@ NTSTATUS filter_commun__recieve_message  (
 	*The message will contain the information needed to end one of the pending I/O operation after the user-mode application finished process it
 	*
 	*/
-
+	char *
 
 
 }

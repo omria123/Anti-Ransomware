@@ -5,7 +5,7 @@
 
 
 
-LISTOP miniifilter__list_operations = NULL;
+static LISTOP minifilter__list_operations = NULL;
 
 
 NTSTATUS close_filter(FLT_FILTER_UNLOAD_FLAGS flags)
@@ -104,7 +104,7 @@ FLT_PREOP_CALLBACK_STATUS write_preoperation_callback(
 			FltSetCallbackDataDirty(Data);
 			break;
 		case 3: //Delay the request - possible only for IRP
-			
+
 			//TODO: enter the operation into list which will 
 			ret_status = FLT_PREOP_PENDING;
 			break;
@@ -167,3 +167,5 @@ void minifilter__finish_operation(NTSTATUS ret_status, unsigned long data_identi
 	//remove from list (clear)
 
 }
+
+

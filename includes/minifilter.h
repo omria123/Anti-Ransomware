@@ -16,10 +16,10 @@ extern const PFLT_FILTER registration__filter;
 extern const FLT_REGISTRATION registration__detailes;
 
 
-typedef struct _OPLIST {
+typedef struct _LISTOP {
 	FLT_CALLBACK_DATA data;
-	OPLIST *next;
-} OPLIST;
+	LISTOP *next;
+} LISTOP;
 
 
 //minifilter aid operations: 
