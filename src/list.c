@@ -1,4 +1,4 @@
-
+#include "list.h"
 
 
 void list__add(OPLIST *first, PFLT_CALLBACK_DATA to_add, unsigned long id)
@@ -36,34 +36,37 @@ OPLIST* list__find(OPLIST* first, unsigned long id)
 }
 
 
-int list__remove(OPLIST*first, unsigned long id)
+OPLIST* list__remove(OPLIST*first, unsigned long id)
 {
 	//delete if exist first appearance of node with given id
+	//returns the new list first node
 	OPLIST *tmp;
 	if(first == NULL)//if list is empty
-		return;
+		return NULL;
 
 	tmp = first->next;
 
 	if(first->oid ==id)
 	{ // check if first node needs to be removed
 		if(tmp == NULL)
-
-		return;
+		{
+			free(first);
+			return NULL;
+		}
 	}
-	tmp = first->next;
+	
 	if(tmp!= NULL)
 	{
 		if(tmp->oid == id)
 		{//remove next node and return 
 			first->next = tmp->next;
 			free(tmp);
-			return;
+			return first;
 		}
 		// call for next node
 		list__remove(next, id);
 	}
 
-	return; //end of list and no one found
+	return first; //end of list and no one found
 
 }

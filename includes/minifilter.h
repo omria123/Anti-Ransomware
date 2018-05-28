@@ -16,11 +16,6 @@ extern const PFLT_FILTER registration__filter;
 extern const FLT_REGISTRATION registration__detailes;
 
 
-typedef struct _LISTOP {
-	FLT_CALLBACK_DATA data;
-	LISTOP *next;
-} LISTOP;
-
 
 //minifilter aid operations: 
 NTSTATUS close_filter(FLT_FILTER_UNLOAD_FLAGS); //cleaning the Minifilter
