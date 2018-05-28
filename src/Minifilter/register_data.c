@@ -56,9 +56,7 @@ const FLT_REGISTRATION registration__detailes = {
 	NULL,
 	NULL,
 	NULL,
-	NULL
-	
-	
+	NULL	
 };
 
 
