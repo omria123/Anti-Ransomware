@@ -48,11 +48,8 @@ OPLIST* list__remove(OPLIST*first, unsigned long id)
 
 	if(first->oid ==id)
 	{ // check if first node needs to be removed
-		if(tmp == NULL)
-		{
-			free(first);
-			return NULL;
-		}
+		free(first);
+		return tmp;
 	}
 	
 	if(tmp!= NULL)

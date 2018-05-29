@@ -1,3 +1,5 @@
+#indef FILTER_COMMUN__H
+#define FILTER_COMMUN__H
 #define PORT_NAME "AntiRansomCommun"
 #define MAX_MESSAGE
 #define WAIT_INDEFINITELY 0
@@ -24,3 +26,6 @@ void filter_commun__disconnect( _In_opt_ PVOID ConnectionCookie);
 extern PFLT_PORT  filter_commun__server_port;
 
 extern PFLT_PORT filter_commun__client_port;
+
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef MINIFILTER__H
+#define MINIFILTER__H
+
 #include <fltkernel.h>
 
 
@@ -35,3 +38,8 @@ int minifilter__report_operation(PFLT_CALLBACK_DATA Data, PCFLT_RELATED_OBJECTS 
 void minfilter__parse_response(response, &response_code, &alternative_data);
 
 void minifilter__finish_operation(NTSTATUS ret_status, );
+
+
+#endif
+
+
