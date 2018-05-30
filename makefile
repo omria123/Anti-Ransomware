@@ -21,12 +21,12 @@ SRCDIR 		= src/MFManager
 OBJDIR		= obj
 
 #define for each target it's needed objects in order to start
-OBJSMF	= list.o minifilter.o filter_commun.o
+OBJMF	= list.o minifilter.o filter_commun.o
 OBJ1	= #TODO write needed objects
 OBJ2 	=
 
 #append to each object file the OBJDIR
-OBJSMF 	:= $(addprefix $(OBJDIR)/, $(OBJSMF))
+OBJMF 	:= $(addprefix $(OBJDIR)/, $(OBJMF))
 OBJ1 	:= $(addprefix $(OBJDIR)/, $(OBJ1))
 OBJ2 	:= $(addprefix $(OBJDIR)/, $(OBJ2))
 
@@ -63,10 +63,17 @@ CFLAGSSYS   += -I /mingw/i686-w64-mingw32/include/ddk -DMINGW -std=c99 -Wall -m6
 # Linker Flags
 ALL_LDFLAGS		:= $(LDFLAGS)
 ALL_LDLIBS		:= -lc
+LD_SYS_FLAGS    := -Wl,--subsystem,native -Wl,--image-base,0x10000 \
+LD_SYS_FLAGS	+= -Wl,--file-alignment,0x1000 -Wl,
+LD_SYS_FLAGS	+= --section-alignment,0x1000 \
+LD_SYS_FLAGS	+= -Wl,--entry,DriverEntry@8 -Wl,--stack,0x40000
+LD_SYS_FLAGS	+= -Wl,--dynamicbase -Wl,--nxcompat \
+-nostartfiles -nostdlib -lntoskrnl -lhal
+
 
 
 # Source, Binaries, Dependencies
-SRCMF		:= $(shell find $(SRCDIRMF) -type f -name '*.c')
+
 SRC	 		:= $(shell find $(SRCDIR) -type f -name '*.c')
 
 DEP			:= $(OBJ:.o=.d)
@@ -109,7 +116,7 @@ RMDIR 		= $(RMDIR_$(V))
 .PHONY: clean
 .DEFAULT_GOAL := all
 
-all: setup $(BIN) $(BINMF)
+all: setup $(BIN1) $(BIN2) $(BINMF)
 setup: dir
 remake: clean all
 
@@ -125,7 +132,7 @@ $(BIN2): $(OBJ2)
 	$(LD) $(ALL_LDFLAGS) $^ $(ALL_LDLIBS) -o $@
 
 $(BINMF): $(OBJMF)
-	$(LD) $(ALL_LDFLAGS) $^ $(ALL_LDLIBS) -o $@
+	$(LD) $(LD_SYS_FLAGS) $^ $(ALL_LDLIBS) -o $@
 
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c

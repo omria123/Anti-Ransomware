@@ -1,6 +1,6 @@
 #include "commun_filter.h"
 #include "minifilter.h"
-
+#include <windows.h>
 
 PFLT_PORT  filter_commun__server_port = NULL, filter_commun__client_port = NULL;
 
@@ -98,6 +98,11 @@ NTSTATUS filter_commun__send_message(char * msg, unsigned long m_size, char *rep
 	return FltSendMessage(registration__filter, filter_commun__client_port, msg, &m_size, reply, &r_size, &timeout);
 }
 
+typedef struct _MSGINFO {
+	unsigned long nid;
+	NTSTATUS ret_status;
+} MSGINFO;
+
 
 NTSTATUS filter_commun__recieve_message  (
       IN PVOID PortCookie,
@@ -111,10 +116,15 @@ NTSTATUS filter_commun__recieve_message  (
 	/*
 	*This function receives new message from the user-mode application.
 	*The message will contain the information needed to end one of the pending I/O operation after the user-mode application finished process it
-	*
+	*the function will parse the information and then pass it on in order to complete the opertaion
 	*/
-
-
+	MSGINFO input;
+	if(InputBufferLength !=sizeof(MSGINFO))
+		; //optional - return error code
+	copyMemory(&input, InputBuffer, sizeof(MSGINFO));
+	minifilter__finish_operation(input.ret_status, input.nid);
+	return STATUS_SUCCESS;
+	
 }
 
 

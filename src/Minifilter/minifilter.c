@@ -2,18 +2,17 @@
 #include "minifilter.h"
 #include "commun_filter.h"
 #include <windows.h>
+#include "list.h"
 
 
 
 static LISTOP minifilter__list_operations = NULL;
-
 
 NTSTATUS close_filter(FLT_FILTER_UNLOAD_FLAGS flags)
 {
 
 	if (flags != FLTFL_FILTER_UNLOAD_MANDATORY)
 		return STATUS_FLT_DO_NOT_DETACH;
-	
 	
 	if (registration__filter != NULL) //if filter has been registered
 		FltUnregisterFilter(registration__filter);
@@ -81,18 +80,20 @@ FLT_PREOP_CALLBACK_STATUS write_preoperation_callback(
 	*/
 
 	char response[MAX_MESSAGE];
-	int response_code, status;
+	int response_code, status, data_size =sizeof(FLT_CALLBACK_DAT);
 	FLT_PREOP_CALLBACK_STATUS ret_status;
 	FLT_CALLBACK_DATA alternative_data;
-
+	PFLT_CALLBACK_DATA tmp;
+	unsigned long node_id; 
+		
 	status = minifilter__report_operation(Data, FltObjects, response); //TODO: write this function
 
 	if(status != 0) //if the communication failed there is no need in delaying the request and slow down the computer so let pass
 		response_code = 0;
 	else
-		minfilter__parse_response(response, &response_code, &alternative_data);
+		minfilter__parse_response(response, &response_code, &alternative_data, &node_id);
 
-	//TODO : maybe change the response_code from 0,1,2,3..... 
+	//TODO : maybe change the response_code from 0,1,2,3..... to something else 
 	switch(response_code) {
 		case 1: //stop the request
     		Data->IoStatus.Information = 0;
@@ -100,12 +101,13 @@ FLT_PREOP_CALLBACK_STATUS write_preoperation_callback(
 			ret_status = FLT_PREOP_COMPLETE;
 			break;
 		case 2: //editing the request		
-			CopyMemory(Data, alternative_data, sizeof(FLT_CALLBACK_DATA));
+			CopyMemory(Data, alternative_data, data_size);
 			FltSetCallbackDataDirty(Data);
 			break;
 		case 3: //Delay the request - possible only for IRP
-
-			//TODO: enter the operation into list which will 
+			tmp = malloc(data_size);
+			copyMemory(tmp, Data, data_size);
+			list__add(minifilter__list_operations, tmp, node_id);
 			ret_status = FLT_PREOP_PENDING;
 			break;
 		case 4: //ask for IRP instead
@@ -149,7 +151,8 @@ int minifilter__report_operation(PFLT_CALLBACK_DATA Data, PCFLT_RELATED_OBJECTS 
 
 
 
-void minfilter__parse_response(char *response, int *code, PFLT_CALLBACK_DATA replacement)
+void minfilter__parse_response(char *response, int *code, PFLT_CALLBACK_DATA replacement,
+ unsigned long  *data_id)
 {
 
 
@@ -159,12 +162,16 @@ void minfilter__parse_response(char *response, int *code, PFLT_CALLBACK_DATA rep
 void minifilter__finish_operation(NTSTATUS ret_status, unsigned long data_identifier)
 {
 	PFLT_CALLBACK_DATA data;
+	OPLIST * node;
+
 	//pull fromn list
-
-
+	node = list__find(minifilter__list_operations, data_identifier);
+	data = node->data;
 	FltCompletePendedPreOperation(*data, ret_status, NULL);
-
-	//remove from list (clear)
+	//clear data and remove from list
+	free(data);
+	minifilter__list_operations = list__remove(minifilter__list_operations, data_identifier);
+	
 
 }
 
