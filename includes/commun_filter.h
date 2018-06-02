@@ -1,4 +1,4 @@
-#indef FILTER_COMMUN__H
+#ifndef FILTER_COMMUN__H
 #define FILTER_COMMUN__H
 #define PORT_NAME "AntiRansomCommun"
 #define MAX_MESSAGE
