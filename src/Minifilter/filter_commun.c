@@ -1,4 +1,4 @@
-#include "commun_filter.h"
+#include "filter_commun.h"
 #include "minifilter.h"
 #include <windows.h>
 
@@ -68,11 +68,6 @@ NTSTATUS filter_commun__accept_connection(
 }
 
 
-
-
-// TODO: write client side connection
-// TODO: create generic api for both sides of communication
-
 void filter_commun__disconnect( _In_opt_ PVOID ConnectionCookie)
 {
 	UNREFERENCED_PARAMETER(ConnectionCookie);
@@ -85,13 +80,13 @@ void filter_commun__disconnect( _In_opt_ PVOID ConnectionCookie)
 }
 
 
-NTSTATUS filter_commun__send_message(char * msg, unsigned long m_size, char *reply,  unsigned long r_size, char type)
+NTSTATUS filter_commun__send_message(char * msg, char *reply, char type)
 {
 	/*
 	The function sends to the client process the message and wait for response that is returned in reply
 	type determine how long the function should wait 0 for forever and 1 for short period of time
 	*/
-
+	unsigned long m_size = MAX_REPORT , r_size=MAX_REPLY;
 	int timeout = WAIT_INDEFINITELY;
 	if(type)
 		timeout = QUICK_TIME_RESPONSE;

@@ -1,14 +1,16 @@
 #include <fltkernel.h>
+
 #include "minifilter.h"
-#include "commun_filter.h"
+#include "filter_commun.h"
 #include <windows.h>
 #include "list.h"
+#include <string.h>
 
 
 
 static LISTOP minifilter__list_operations = NULL;
 
-NTSTATUS close_filter(FLT_FILTER_UNLOAD_FLAGS flags)
+NTSTATUS minifilter__close_filter(FLT_FILTER_UNLOAD_FLAGS flags)
 {
 
 	if (flags != FLTFL_FILTER_UNLOAD_MANDATORY)
@@ -79,7 +81,7 @@ FLT_PREOP_CALLBACK_STATUS write_preoperation_callback(
 	It will send the first two arguments to the filter 
 	*/
 
-	char response[MAX_MESSAGE];
+	char response[REPLY_LENGTH];
 	int response_code, status, data_size =sizeof(FLT_CALLBACK_DAT);
 	FLT_PREOP_CALLBACK_STATUS ret_status;
 	FLT_CALLBACK_DATA alternative_data;
@@ -130,10 +132,10 @@ int minifilter__report_operation(PFLT_CALLBACK_DATA Data, PCFLT_RELATED_OBJECTS 
 	unsigned long d_size = sizeof(FLT_CALLBACK_DATA), o_size = sizeof (FLT_RELATED_OBJECTS);
 	char * request = malloc(d_size + r_size);
 
-	CopyMemory(request, Data, d_size);
-	CopyMemory(request+d_size, FltObjects, o_size);
-	
-	status = filter_commun__send_message(request, d_size + r_size, response, MAX_MESSAGE, 1);
+	memcpy(request, Data, d_size);
+	memcpy(request+d_size, FltObjects, o_size);
+
+	status = filter_commun__send_message(request, response, 1);
 
 	free(request);
 

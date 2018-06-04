@@ -1,13 +1,17 @@
 #ifndef FILTER_COMMUN__H
 #define FILTER_COMMUN__H
+
+
+#include <fltkernel.h>
+
 #define PORT_NAME "AntiRansomCommun"
-#define MAX_MESSAGE
+#define MAX_REPLY_LENGTH 
+#define REPORT_LENGTH sizeof(FLT_CALLBACK_DATA) + sizeof(FLT_RELATED_OBJECTS)
 #define WAIT_INDEFINITELY 0
 #define QUICK_TIME_RESPONSE 10 
 
 //To be changed ^^^^^^^^^^^^^^^ the value wasn't checked and may be misleading 
 
-#include <fltkernel.h>
 
 
 

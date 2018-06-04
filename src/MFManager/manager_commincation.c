@@ -21,9 +21,9 @@ int manager_communication__init_port()
 
 
 
-int manager_communication__get_call(MINIFILTER_REPORT *msg)
+int manager_communication__get_report( void *msg)
 {
-	//the function fill the given structre in the message from the minifilter
+	//the function fill the given pointer with the memory of the report
 	HRESULT status;
 	status = FilterGetMessage(manager_communication__port_handle,
 	msg,
@@ -41,7 +41,7 @@ void manager_communication__close_port()
 
 
 
-int manager_communication__reply_message(MINIFILTER_MESSAGE *msg, char *reply, int size)
+int manager_communication__reply_message(MINIFILTER_REPORT *msg, char *reply, int size)
 {
 	//the function will reply to previous message from the minifilter
 	int len = sizeof(FILTER_REPLY_HEADER);	

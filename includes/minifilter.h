@@ -21,7 +21,7 @@ extern const FLT_REGISTRATION registration__detailes;
 
 
 //minifilter aid operations: 
-NTSTATUS close_filter(FLT_FILTER_UNLOAD_FLAGS); //cleaning the Minifilter
+NTSTATUS minifilter__close_filter(FLT_FILTER_UNLOAD_FLAGS); //cleaning the Minifilter
 
 
 //filter operations callbacks:
@@ -37,7 +37,7 @@ int minifilter__report_operation(PFLT_CALLBACK_DATA Data, PCFLT_RELATED_OBJECTS 
 
 void minfilter__parse_response(response, &response_code, &alternative_data);
 
-void minifilter__finish_operation(NTSTATUS ret_status, );
+void minifilter__finish_operation(NTSTATUS ret_status );
 
 
 #endif
