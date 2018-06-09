@@ -105,6 +105,7 @@ FLT_PREOP_CALLBACK_STATUS write_preoperation_callback(
 		case 2: //editing the request		
 			CopyMemory(Data, alternative_data, data_size);
 			FltSetCallbackDataDirty(Data);
+			ret_status = FLT_PREOP_SUCCESS_NO_CALLBACK;
 			break;
 		case 3: //Delay the request - possible only for IRP
 			tmp = malloc(data_size);
