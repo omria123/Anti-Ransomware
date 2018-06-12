@@ -22,9 +22,9 @@ typedef struct _OPREPORT {
 
 
 typedef struct _MINIFITLER_REPORT {
+	OPREPORT report; 
 	unsigned long reply_length;
 	unsigned long long message_id;
-	OPREPORT report; 
 } MINIFITLER_REPORT;
 
 

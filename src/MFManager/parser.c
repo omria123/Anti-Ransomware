@@ -16,7 +16,7 @@ Difference - Cache is used for reissuing the same data again and again and Buffe
 it can also accured once for each data unit and still be useful contrasted to cahcing
 */
 
-int parser__parse_report(MINIFILTER_REPORT *report, PARSED_REPORT *final )
+int parser__parse_report(OPREPORT *report, PARSED_REPORT *final )
 // the function parse the first argument into the second
 {
 
@@ -59,7 +59,7 @@ int parser__parse_report(MINIFILTER_REPORT *report, PARSED_REPORT *final )
 		return 1; //the file is on volume that isn't mounted 
 	}
 
-
+	final->path_length = length;
 	final->path = name_info.FileName; // get file full path.
 }
 

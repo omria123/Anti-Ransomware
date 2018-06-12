@@ -5,7 +5,7 @@
 #include <fltkernel.h>
 
 #define PORT_NAME "AntiRansomCommun"
-#define MAX_REPLY_LENGTH 
+#define MAX_REPLY_LENGTH 10
 #define REPORT_LENGTH sizeof(FLT_CALLBACK_DATA) + sizeof(FLT_RELATED_OBJECTS)
 #define WAIT_INDEFINITELY 0
 #define QUICK_TIME_RESPONSE 10 

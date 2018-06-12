@@ -12,7 +12,7 @@ typedef struct _PARSED_REPORT
 
 
 
-int parser__parse_report( MINIFILTER_REPORT * report, PARSED_REPORT *final);
+int parser__parse_report( OPREPORT * report, PARSED_REPORT *final);
 
 
 ULONG parser__get_objfile_length(PFLT_INSTANCE inst, PFILE_OBJECT of);

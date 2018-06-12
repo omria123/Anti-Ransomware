@@ -157,8 +157,14 @@ int minifilter__report_operation(PFLT_CALLBACK_DATA Data, PCFLT_RELATED_OBJECTS 
 void minfilter__parse_response(char *response, int *code, PFLT_CALLBACK_DATA replacement,
  unsigned long  *data_id)
 {
+	*code = (*response) - '0';
+	if (*code == 2)
+		memcpy(replacement, response + 1, sizeof (FLT_CALLBACK_DATA));
+`
+	if(*code == 3)
+		memcpy(data_id, response + 1, 4);
 
-
+	return;
 }
 
 
