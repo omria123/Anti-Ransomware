@@ -2,9 +2,8 @@
 ;System defined values
 [Version]
 Signature   = "$WINDOWS NT$"
-Class = "AntiVirus"
-ClassGuid = {b1d1a169-c54f-4379-81db-bee7d88d7454}
-Provider    = %ProviderString%
+Class 		= "AntiVirus"
+ClassGuid 	= {b1d1a169-c54f-4379-81db-bee7d88d7454}
 DriverVer   = 10/09/2001,1.0.0.0
 CatalogFile = 
 
@@ -17,11 +16,13 @@ DefaultDestDir = 12
 
 ;which files to copy
 [DefaultInstall]
-CopyFiles = Minifilter.Driver, Minifilter.AppFiles
 OptionDesc = %ServiceName%
+CopyFiles = Minifilter.Driver, Minifilter.AppFiles
 
-[DefaultInstall.Services] ;; define Services to be run with the minifilter
+[DefaultInstall.Services] 
+;;define Services to be run with the minifilter
 AddService = %ServiceName%,,Minifilter.Service
+
 
 [Minifilter.DriverFiles]
 %DriverName%.sys
@@ -29,17 +30,23 @@ AddService = %ServiceName%,,Minifilter.Service
 [Minifilter.AppFiles]
 %MFMName%.exe
 
+
 [Minifilter.Service]
 DisplayName    = %ServiceName%
-Description    = %MFMDesc%
-ServiceBinary  = %12%\&DriverName%.sys
+Description    = %ServiceDesc%
+ServiceBinary  = %12%\%DriverName%.sys
 ServiceType    = 2 ;    SERVICE_FILE_SYSTEM_DRIVER
-StartType      = 3 ;    The stage which the minifilter is loaded in this case - SERVICE_DEMAND_START(3) 
+StartType      = 0 ;    The stage which the minifilter is loaded in this case - SERVICE_BOOT_START(0) 
 ErrorControl   = 1 ;    SERVICE_ERROR_NORMAL%
 LoadOrderGroup = "FSFilter Anti-Virus"
 Dependencies   = FltMgr
-AddReg        =
+AddReg         = Minifilter.AddRegistry
 
+
+[Minifilter.AddRegistry]
+HKR,%SubKey%,"DefaultInstance", 0x00000000,%Instance1%
+HKR,%SubKey%"\"%Instance1.Name%,"Altitude",0x00000000,%Instance1.Altitude% ;;define the altitude 
+HKR,%SubKey%"\"%Instance1.Name%,"Flags",0x00010001,%Instance1.Flags% ;;define the instance flag
 
 
 [DefaultUninstall] ;
@@ -47,19 +54,14 @@ DelFiles   = Minifilter.DriverFiles, Minifilter.UserFiles
 ;DelReg    = define deletion of registery if registery was effected
 
 
-[DefaultUninstall.Services]
-DelService  = %ServiceName%,0x200
-
-
-
-
-
-
 ;; Pre-defined strings
 [Strings]
-Provider = ""
 DriverName = "myMinifilter"
 MFMName = "MFManager"
 ServiceName = "Anti-Ransomware" ;; change key name
-
+ServiceDesc = "Minifilter used for anti-ransomware software"
+Instance1  = "minifilter instace"
+Instance1.Altitude = 329011 
+Instance1.Flags = 0x0
+SubKey = "Instances"
 

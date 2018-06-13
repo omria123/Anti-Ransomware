@@ -36,7 +36,7 @@ int manager_communication__get_report( void *msg)
 void manager_communication__close_port()
 {
 // the function will close the handle
-		CloseHandle(manager_communication__port_handle);
+	CloseHandle(manager_communication__port_handle);
 }
 
 

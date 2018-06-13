@@ -180,8 +180,6 @@ void minifilter__finish_operation(NTSTATUS ret_status, unsigned long data_identi
 	//clear data and remove from list
 	free(data);
 	minifilter__list_operations = list__remove(minifilter__list_operations, data_identifier);
-	
-
 }
 
 
