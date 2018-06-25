@@ -1,0 +1,23 @@
+﻿  Building 'Anti-Ransomware' with toolset 'WindowsKernelModeDriver10.0' and the 'Desktop' target platform.
+  Stamping x64\Debug\Anti-Ransomware.inf
+  Stamping [Version] section with DriverVer=06/25/2018,13.8.58.962
+C:\Users\ufdh\Desktop\Anti-Ransomware\Anti-Ransomware\Anti-Ransomware.inf(68-68): warning 1205: Section [MiniFilter.DriverFiles] referenced from DelFiles and CopyFiles directive.
+  minifilter.c
+  Anti-Ransomware.vcxproj -> C:\Users\ufdh\Desktop\Anti-Ransomware\x64\Debug\Anti-Ransomware.sys
+  Done Adding Additional Store
+  Successfully signed: C:\Users\ufdh\Desktop\Anti-Ransomware\x64\Debug\Anti-Ransomware.sys
+  
+  ..........................
+  Signability test complete.
+  
+  Errors:
+  None
+  
+  Warnings:
+  None
+  
+  Catalog generation complete.
+  C:\Users\ufdh\Desktop\Anti-Ransomware\x64\Debug\Anti-Ransomware\anti-ransomware.cat
+  Done Adding Additional Store
+  Successfully signed: C:\Users\ufdh\Desktop\Anti-Ransomware\x64\Debug\Anti-Ransomware\anti-ransomware.cat
+  
